@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br></br>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 100px auto; margin: 0 auto;">
+        <div>
+            <img class="card-img ml-auto" src="{{ book.image_url }} " alt="Card image cap" style="height:477px; width:322.5px">
+            <br></br>
+            <div class="box" style="width:322.5px; height:300px">
+                <h6 class="card-title">Title: {{ book.title }}</h6>
+                <p class="card-text">Author: {{ book.author }}</p>
+                <p class="card-text">Recommended Age: {{ book.min_age }}+ </p>  
+                <p class="card-text">Rating: {{ book.rating }}/5</p>
+                <p class="card-text">Genres:</p>
+                <ul style="margin:0px">
+                    {% for genre in book_genres %}  
+                        <li class="card-text">{{ genre }}</li>    
+                    {% endfor %}
+                </ul>
+            </div> 
+            <br></br>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if submitted %}
+                    <input class="btn btn-secondary disabled",type="submit" value="This Book Is Pending"></input>
+                    <br></br>
+                    <div class="box" style="width:322.5px">
+                        <p class="card-text" style="font-size:16px">The book is currently on hold for one week. Please confirm once you have picked up the book. After one week, this book will no longer be on hold and it will be available to other readers. When you have picked up your book from the specified nook, click the confirm button. If you do not wish to borrow this book anymore, click the cancel button.
+                    </div>
+                    <br></br>
+                    <button type="button" class="btn btn-secondary">Confirm</button>
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                {% else %}
+                    <input type="submit" value="Borrow This Book" class="btn btn-secondary green_bg"></input>
+                {% endif %}
+            </form>
+        </div>
+        <div class="row mt-3">
+            {% for review in reviews_list %}
+                <div class="box" style="width:500px; margin:15px">
+                    <div class="card-body">
+                    <h6 class="card-text">Rating: {{ review.rating }}/5</h6>
+                    <p class="card-text">{{ review.review }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+{% endblock %}

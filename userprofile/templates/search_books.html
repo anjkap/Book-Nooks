@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <center> 
+        {% if searched %}
+            <h1>You searched for...{{ searched }}</h1>
+        {% else %}
+            <h1>404 Your request has not went through. Try again later</h1>
+        {% endif %}  
+    </center>
+
+{% endblock %}3
