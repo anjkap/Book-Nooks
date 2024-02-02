@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <style>
+
+
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@300&family=Nunito+Sans:opsz@6..12&family=Pinyon+Script&family=Taviraj:wght@100&display=swap');
+
+      .box {
+      background-color: #f2f2f2;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      text-align: left;
+      padding: 25px;
+
+      }
+
+      .size {
+        width: 650px;
+        height: 400px; 
+      }
+
+      body {
+        background-color: #EFE6E0;
+      }
+
+      .nav_bar {
+        background-color: #18292B;
+      }
+
+      .navbar_heading1 {
+        color: white;
+      }
+
+      .white_text {
+        color: white;
+      }
+
+      .gfg {
+            border-collapse:separate;
+            border-spacing:0 15px;
+      }
+
+      .white_text {
+        color: white;
+      }
+
+      .black_text {
+        color: black;
+      }
+
+
+      .green_text {
+        color: #07432a;
+      }
+
+      .center_align {
+        text-align: center;
+      }
+
+      .left_align {
+        text-align: left;
+      }
+
+      .right_align {
+        text-align: right;
+      }
+
+      p.normal {
+        font-weight: normal;
+      }
+
+      p.thick {
+        font-weight: bold;
+      }
+
+
+      .h1 {
+        font-family: 'Pinyon Script', cursive;
+        font-weight: 400;
+      }
+
+
+      .h2 {
+        font-family: 'Abril Fatface', serif;
+        font-size: 60px;
+      }
+
+
+      .h3 {
+        font-family: 'Josefin Slab', serif;
+        font-weight: 100;
+        font-size: 15px;
+      }
+
+
+      .p_regular {
+        font-family: 'Nunito Sans', sans-serif;
+      }
+
+
+      .p_alternate {
+        font-family: 'Josefin Slab', serif;
+        font-weight: 300;
+      }
+
+      .white_bg {
+        background-color: white;
+      }
+
+      .black_bg {
+        background-color: black;
+      }
+
+      .green_bg {
+        background-color: #07432a;
+      }
+
+
+      .break::before {
+        content: "";
+        display: block;
+        height: 10px; /* Customize the length of the line break */
+        margin: 10px 0; /* Adjust top and bottom spacing as needed */
+      }
+
+      .content-box {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 853px;
+      }
+
+      .centered {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center; /* Optional, for horizontal centering of text */
+        margin:25px;
+      }
+    </style>
+    
+
+
+    <title>Book Nooks</title>
+  </head>
+  <body>    
+    {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg navbar-dark green_bg">
+      <a class="navbar-brand" style ="font-size: 30px" href="{% url 'dashboard' %}">Book Nooks</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" style="font-weight: 100; font-size: 18px" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Hello,  {{ user.username }}!</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
+              <a class="dropdown-item" href="{% url 'add-books' %}">Add A Book</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+            </div>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'list-books' %}">Books</a>
+          </li>   
+        </ul>
+      </div>
+      <form class="d-flex" method=POST action="{% url 'search-books' %}">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="Search Books" aria-label="Search">
+        <button class="btn btn-outline-secondary my-2 my-sm-0 white_text" type="submit">Search</button>
+      </form>
+
+
+    </nav>
+    {% else %}
+    <nav class="navbar navbar-expand-lg navbar-dark green_bg">
+      <a class="navbar-brand" style ="font-size: 30px" href="{% url 'home' %}">Book Nooks
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'register-user' %}">Register</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'login' %}">Log In</a>
+        </li>
+      </ul>
+    </nav>
+    {% endif %}
+    <div class="container">
+      {% if messages %}
+        {% for message in messages %}
+          <br></br>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}
+      {% endblock %}
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>

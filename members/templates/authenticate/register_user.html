@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br></br>
+
+{% if form.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        There was an error with your form.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+  </div>
+
+{% endif %}
+    <h1 class="h2 green_text">Register</h1>
+    <br></br>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br></br>
+            <button type="submit" class="btn btn-secondary green_bg">Submit</button>
+        </form>
+{% endblock %}

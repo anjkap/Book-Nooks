@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br></br>
+<div class="jumbotron green_bg">
+  <h2 class="lead display-3 h2 white_text">Book Nooks</h2>
+  <h2 class="lead white_text h3" style="font-size:28px;">A simple platform for bookworms around the world to share their love of reading.</h2>
+  <hr class="my-4">
+  <h2 class ="lead white_text">Get Started</h2>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary white_bg green_text" href="{% url 'register-user' %}">Register</button>
+    <button type="button" class="btn btn-secondary white_bg green_text" href="{% url 'login' %}">Log In</button>
+  </div>
+</div>
+
+
+{% endblock %}
